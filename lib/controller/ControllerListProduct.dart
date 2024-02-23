@@ -17,12 +17,12 @@ class ControllerListProduct extends GetxController {
   }
 
   @override
-  void onInit(){
+  void onInit(){  
     super.onInit();
     loadSession();
     loadData();
   }
-
+  
   void loadData() async {
     try{
       final response = await http.get(Uri.parse(
