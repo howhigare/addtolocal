@@ -1,114 +1,71 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<ProductResponseModel> productResponseModelFromJson(String str) => List<ProductResponseModel>.from(json.decode(str).map((x) => ProductResponseModel.fromJson(x)));
+MovieResponseModel movieResponseModelFromJson(String str) =>
+    MovieResponseModel.fromJson(json.decode(str));
 
-String productResponseModelToJson(List<ProductResponseModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+class MovieResponseModel {
+  final int page;
+  final List<MovieModel> results;
+  final int totalPages;
+  final int totalResults;
 
-class ProductResponseModel {
-  int id;
-  String brand;
-  String name;
-  String price;
-  dynamic priceSign;
-  dynamic currency;
-  String imageLink;
-  String productLink;
-  String websiteLink;
-  String description;
-  double rating;
-  String category;
-  String productType;
-  List<dynamic> tagList;
-  String createdAt;
-  String updatedAt;
-  String productApiUrl;
-  String apiFeaturedImage;
-  List<ProductColor> productColors;
-
-  ProductResponseModel({
-    required this.id,
-    required this.brand,
-    required this.name,
-    required this.price,
-    required this.priceSign,
-    required this.currency,
-    required this.imageLink,
-    required this.productLink,
-    required this.websiteLink,
-    required this.description,
-    required this.rating,
-    required this.category,
-    required this.productType,
-    required this.tagList,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.productApiUrl,
-    required this.apiFeaturedImage,
-    required this.productColors,
+  MovieResponseModel({
+    required this.page,
+    required this.results,
+    required this.totalPages,
+    required this.totalResults,
   });
 
-  factory ProductResponseModel.fromJson(Map<String, dynamic> json) => ProductResponseModel(
-    id: json["id"],
-    brand: json["brand"],
-    name: json["name"],
-    price: json["price"],
-    priceSign: json["price_sign"],
-    currency: json["currency"],
-    imageLink: json["image_link"],
-    productLink: json["product_link"],
-    websiteLink: json["website_link"],
-    description: json["description"],
-    rating: json["rating"] == null ? 0 : json["rating"]?.toDouble(),
-    category: json["category"] == null ? "no data" : json["category"],
-    productType: json["product_type"],
-    tagList: List<dynamic>.from(json["tag_list"].map((x) => x)),
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
-    productApiUrl: json["product_api_url"],
-    apiFeaturedImage: json["api_featured_image"],
-    productColors: List<ProductColor>.from(json["product_colors"].map((x) => ProductColor.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "brand": brand,
-    "name": name,
-    "price": price,
-    "price_sign": priceSign,
-    "currency": currency,
-    "image_link": imageLink,
-    "product_link": productLink,
-    "website_link": websiteLink,
-    "description": description,
-    "rating": rating,
-    "category": category,
-    "product_type": productType,
-    "tag_list": List<dynamic>.from(tagList.map((x) => x)),
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-    "product_api_url": productApiUrl,
-    "api_featured_image": apiFeaturedImage,
-    "product_colors": List<dynamic>.from(productColors.map((x) => x.toJson())),
-  };
+  factory MovieResponseModel.fromJson(Map<String, dynamic> json) =>
+      MovieResponseModel(
+        page: json["page"],
+        results: List<MovieModel>.from(
+            json["results"].map((x) => MovieModel.fromJson(x))),
+        totalPages: json["total_pages"],
+        totalResults: json["total_results"],
+      );
 }
 
-class ProductColor {
-  String hexValue;
-  String colourName;
+class MovieModel {
+  final String backdropPath;
+  final int id;
+  final String title;
+  final String originalTitle;
+  final String overview;
+  final String posterPath;
+  final double popularity;
+  final DateTime releaseDate;
+  final double voteAverage;
+  final int voteCount;
 
-  ProductColor({
-    required this.hexValue,
-    required this.colourName,
+  MovieModel({
+    required this.backdropPath,
+    required this.id,
+    required this.title,
+    required this.originalTitle,
+    required this.overview,
+    required this.posterPath,
+    required this.popularity,
+    required this.releaseDate,
+    required this.voteAverage,
+    required this.voteCount,
   });
 
-  factory ProductColor.fromJson(Map<String, dynamic> json) => ProductColor(
-    hexValue: json["hex_value"],
-    colourName: json["colour_name"] == null ? "no data" : json["colour_name"],
+ factory MovieModel.fromJson(Map<String, dynamic> json) {
+  return MovieModel(
+    backdropPath: json["backdrop_path"] ?? "", // Handle null case
+    id: json["id"] ?? 0, // Handle null case
+    title: json["title"] ?? "", // Handle null case
+    originalTitle: json["original_title"] ?? "", // Handle null case
+    overview: json["overview"] ?? "", // Handle null case
+    posterPath: json["poster_path"] ?? "", // Handle null case
+    popularity: json["popularity"]?.toDouble() ?? 0.0, // Handle null case
+    releaseDate: json["release_date"] != null
+        ? DateTime.parse(json["release_date"])
+        : DateTime.now(), // Provide default value
+    voteAverage: json["vote_average"]?.toDouble() ?? 0.0, // Handle null case
+    voteCount: json["vote_count"] ?? 0, // Handle null case
   );
+}
 
-  Map<String, dynamic> toJson() => {
-    "hex_value": hexValue,
-    "colour_name": colourName,
-  };
 }
