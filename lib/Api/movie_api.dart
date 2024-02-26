@@ -32,37 +32,15 @@ class MovieApi extends GetxController {
           "https://api.themoviedb.org/3/trending/movie/day?api_key=c5a08a2d246ab58398fc520d9b8ef159"));
 
       if (response.statusCode == 200) {
-        //mengisi data dengan hasil json dari model
-        // print(response.body);
+        // Mengisi data dengan hasil json dari model
         resultctr.value = movieResponseModelFromJson(response.body).results;
       } else {
         print("Status Code : ${response.statusCode}");
       }
-      isLoading = false.obs;
+      isLoading.value = false;
     } catch (e) {
       print(e);
-      isLoading.value =
-          false; // Mengubah isLoading menjadi false jika terjadi error
-    }
-  }
-
-  loadDataCategories(String categories) async {
-    try {
-      final response = await http.get(Uri.parse(
-          "https://api.themoviedb.org/3/movie/${categories}?api_key=c5a08a2d246ab58398fc520d9b8ef159"));
-
-      if (response.statusCode == 200) {
-        //mengisi data dengan hasil json dari model
-        // print(response.body);
-        resultctr.value = movieResponseModelFromJson(response.body).results;
-      } else {
-        print("Status Code : ${response.statusCode}");
-      }
-      isLoading = false.obs;
-    } catch (e) {
-      print(e);
-      isLoading.value =
-          false; // Mengubah isLoading menjadi false jika terjadi error
+      isLoading.value = false; // Mengubah isLoading menjadi false jika terjadi error
     }
   }
 

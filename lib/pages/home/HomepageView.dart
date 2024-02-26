@@ -15,6 +15,12 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        title: Text(
+          'Movie App',
+          style: TextStyle(
+            color: Colors.black, // Ubah warna teks sesuai kebutuhan
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -26,7 +32,7 @@ class HomeView extends GetView<HomeController> {
               ))
         ],
       ),
-      backgroundColor:Colors.white,
+      backgroundColor: Colors.white,
       body: Obx(
         () => controller.isMobileLayout.value
             ? const MobileLayout()
