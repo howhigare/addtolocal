@@ -45,9 +45,11 @@ class MobileLayout extends StatelessWidget {
             )
           : Container(
               child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 0.70,
+                  mainAxisSpacing: 10, // Jarak antar card secara vertikal
+                  crossAxisSpacing: 10, // Jarak antar card secara horizontal
                 ),
                 padding: const EdgeInsets.all(20),
                 itemCount: apiController.resultctr.length,
